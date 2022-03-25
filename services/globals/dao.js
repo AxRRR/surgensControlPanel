@@ -45,5 +45,14 @@ module.exports = {
                 .then(({ data }) => data)
                 .catch((error) => error)
         )
+    },
+    async getSpecificWarLog(clan_tag){
+        return ( 
+            await 
+                axios
+                .get(`clans/%23${clan_tag.substr(1)}/currentriverrace`)
+                .then(({ data }) => data)
+                .catch((error) => error)
+        )
     }
 }

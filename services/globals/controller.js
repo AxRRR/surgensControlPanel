@@ -1,24 +1,28 @@
-const { statusResolve } = require("../../utils/status");
-const { getClans, getMembers, getClan, getSpecificUser, getSpecificUserUpChest } = require("./dao");
-const { getOnlyContry } = require("./utils");
+const { statusResolve } =      require("../../utils/status");
+const { 
+    getMembers, 
+    getClan, 
+    getSpecificUser, 
+    getSpecificUserUpChest, 
+    getSpecificWarLog 
+} =                             require("./dao");
+const { getAllClans } =         require("./utils");
+
+
 
 const getListOfClans = async(req, res) => {
-    let { items } = await getClans();
+    const gettingClans = await getAllClans();
 
-    if(!items){
+    if(!gettingClans){
         return res.status(statusResolve.badRequest).json({
             status: false,
             message: 'Ocurrio un error al realizar la solicitud'
         })
     }
 
-    // Usamos nuestro customFilter unicamente de México
-    // Asi evitamos que lleguen clanes distintos
-    items = await getOnlyContry(items, 'Mexico');
-
     return res.status(statusResolve.success).json({
         status: true,
-        items
+        items: gettingClans
     })
 }
 
@@ -42,12 +46,11 @@ const getListOfMembers = async(req, res) => {
 
     const tags = [];
     const completeListMembers = [];
-    let { items } = await getClans();
+    const gettingClans = await getAllClans();
 
     // Obtenemos los clanes
     // y luego pusheamos todos los tags que encuentra
-    items = getOnlyContry(items, 'Mexico');
-    items.map(({ tag }) => tags.push(tag));
+    gettingClans.map(({ tag }) => tags.push(tag));
 
     if(!tags){
         res.status(statusResolve.badRequest).json({
@@ -129,12 +132,11 @@ const getListOfTopClans = async(req, res) => {
 
     const tags = [];
     const completeListMembers = [];
-    let { items } = await getClans();
+    const gettingClans = await getAllClans();
 
     // Obtenemos los clanes
     // y luego pusheamos todos los tags que encuentra
-    items = getOnlyContry(items, 'Mexico');
-    items.map(({ tag }) => tags.push(tag));
+    gettingClans.map(({ tag }) => tags.push(tag));
 
     if(!tags){
         res.status(statusResolve.badRequest).json({
@@ -169,7 +171,7 @@ const getListOfTopClans = async(req, res) => {
     }).reverse();
 
     // Recorremos el array para ordenar solamente el numero de elementos
-    // del top, hacemos un max-1 para que el indice no afecte por el indice 0. 
+    // del top, hacemos un max-1 para que no itere una extra vez. 
     let nextListComplete = [];
     complecompleteListMembers
         .map((member, index) => index <= parseInt(max-1) && nextListComplete.push(member))
@@ -182,11 +184,99 @@ const getListOfTopClans = async(req, res) => {
     })
 }
 
+const getSpecificDonationsClan = async(req, res) => {
+    let { donationsPerWeek } = await getClan(req.query.tagname || '#Q0QGU0LR');
+
+    if(!donationsPerWeek){
+        return res.status(statusResolve.badRequest).json({
+            status: false,
+            message: 'Ocurrio un error al realizar la solicitud'
+        })
+    }
+
+    return res.status(statusResolve.success).json({
+        status: true,
+        donations: donationsPerWeek
+    })
+}
+
+const getDonationsClans = async(req, res) => {
+
+    const gettingClans = await getAllClans();
+    const donationsByClan = [];
+
+    if(!gettingClans){
+        return res.status(statusResolve.badRequest).json({
+            status: false,
+            message: 'Ocurrio un error al realizar la solicitud'
+        })
+    }
+
+    await Promise.all( 
+        gettingClans.map(async(clan) => {
+            let { donationsPerWeek, name } = await getClan(clan.tag || '#Q0QGU0LR');
+            donationsByClan.push({
+                name,
+                donationsPerWeek
+            })
+        })
+    )
+
+    return res.status(statusResolve.success).json({
+        status: true,
+        donations: donationsByClan
+    })
+}
+
+const getSpecificWar = async(req, res) => {
+    let payload_warlog = await getSpecificWarLog(req.query.tagname || '#Q0QGU0LR');
+
+    if(!payload_warlog){
+        return res.status(statusResolve.badRequest).json({
+            status: false,
+            message: 'Ocurrio un error al realizar la solicitud'
+        })
+    }
+
+    return res.status(statusResolve.success).json({
+        status: true,
+        warLog: payload_warlog
+    })
+}
+
+const getWarlogClans = async(req, res) => {
+    const gettingClans = await getAllClans();
+    const warLogByClan = [];
+
+    await Promise.all(
+        gettingClans.map(async(clan) => {
+            let payload_warlog = await getSpecificWarLog(clan.tag || '#Q0QGU0LR');
+            warLogByClan.push(payload_warlog)
+        })
+    )
+
+    if(!warLogByClan){
+        return res.status(statusResolve.badRequest).json({
+            status: false,
+            message: 'Ocurrio un error al realizar la solicitud'
+        })
+    }
+
+    return res.status(statusResolve.success).json({
+        status: true,
+        warLog: warLogByClan
+    })
+}
+
 module.exports = {
     getListOfClans,
     getSpecificClan,
     getListOfMembers,
     getSpecificMember,
     getTopSpecificClan,
-    getListOfTopClans
+    getListOfTopClans,
+    getSpecificDonationsClan,
+    getDonationsClans,
+    getSpecificWar,
+    getWarlogClans
 };

@@ -14,7 +14,10 @@ const authSchema = Schema({
     password_member: {
         type: String,
         required: true,
+    },
+    role_member: {
+        type: String
     }
 });
 
-module.exports = model('Auth', authSchema);
+module.exports = model('auth', authSchema);

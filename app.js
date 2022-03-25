@@ -1,5 +1,6 @@
 // const createError = require('http-errors');
 const express = require('express');
+const { dbConnection } = require('./database');
 const app = express();
 require('dotenv').config();
 const router = require('./routes');
@@ -7,6 +8,8 @@ const axios = require('./utils/axios');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+dbConnection();
 
 axios.interceptors.request.use(req => {
 
