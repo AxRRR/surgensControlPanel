@@ -4,7 +4,9 @@ const {
     getListOfClans, 
     getListOfMembers, 
     getSpecificClan, 
-    getSpecificMember 
+    getSpecificMember, 
+    getTopSpecificClan,
+    getListOfTopClans
 } =                     require('../services/globals/controller');
 
 const router = express.Router();
@@ -16,5 +18,7 @@ router.use('/clans', getListOfClans);
 router.use('/specific_clan', getSpecificClan);
 router.use('/all_members', getListOfMembers);
 router.use('/specific_member', getSpecificMember);
+router.use('/specific_top', getTopSpecificClan);
+router.use('/all_top', getListOfTopClans);
 
 module.exports = router;
