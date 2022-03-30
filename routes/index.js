@@ -1,6 +1,11 @@
 const express =         require('express');
 const { authLogin } =   require('../services/admin/controller');
-const { createMember, loginMember } = require('../services/auth/controller');
+const { 
+    createMember, 
+    loginMember, 
+    validateMemberTag, 
+    emailVerification
+} =                     require('../services/auth/controller');
 const { 
     getListOfClans, 
     getListOfMembers, 
@@ -15,6 +20,7 @@ const {
 } =                     require('../services/globals/controller');
 
 const router = express.Router();
+
 
 // Request Clan
 router.use('/clans', getListOfClans);
@@ -31,5 +37,7 @@ router.use('/all_warlog', getWarlogClans);
 // Authentication
 router.use('/auth/register', createMember);
 router.use('/auth/login', loginMember);
+router.use('/auth/validate_tag', validateMemberTag);
+router.use('/auth/confirm_email', emailVerification)
 
 module.exports = router;

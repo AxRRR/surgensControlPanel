@@ -2,9 +2,12 @@
 const express = require('express');
 const { dbConnection } = require('./database');
 const app = express();
+const cors = require('cors');
 require('dotenv').config();
 const router = require('./routes');
 const axios = require('./utils/axios');
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

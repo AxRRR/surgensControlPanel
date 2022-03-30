@@ -1,0 +1,82 @@
+
+.register {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    // box-shadow : 0px 0px 10px rgb( 100 , 100 , 100 );
+    input{
+        width: 90%;
+        height: 3rem;
+        font-size: 18px;
+        text-align: center;
+        // border-color: transparent;
+        // border-color: aqua;
+        background-color: aliceblue;
+        border-color: transparent;
+        // border-bottom-color: rgba(165, 155, 155, 0.5);
+        &:focus{
+            outline:none;
+        } 
+    }
+    &__modal{
+        width: 90%;
+        top: 0;
+        height: 100vh;
+        z-index: 20;
+        backdrop-filter: blur(1rem);
+        position: fixed;
+        section{
+            padding: 1rem;
+            margin-top: 50%;
+            background-color: rgb(255, 255, 255);
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            article{
+                // background-color: antiquewhite;
+                padding: 1rem;
+                margin-top: 0;
+                p{
+                    margin: 0.5rem;
+                    font-weight: bolder;
+                }
+            }
+            footer{
+                width: 100%;
+                padding-top: 1rem;
+                button{
+                    width: 50%;
+                    border-color: transparent;
+                    height: 3rem;
+                    border-right-color: 19px black;
+                }
+            }
+        }
+    }
+    &__showMembers{
+        // background-color: antiquewhite;
+        width: 90%;
+        margin: auto;
+        div{
+            // background-color: aqua;
+            display: flex;
+            height: 4rem;
+            section {
+                width: 50%;
+                background-color: whitesmoke;
+                font-size: 16px;
+                text-align: left;
+                padding-left: 0.5rem;
+                button{
+                    height: 4rem;
+                    width: 100%;
+                    background-color: $SECONDARY_COLOR;
+                    color: white;
+                    font-weight: bolder;
+                    border-color: transparent;
+                    // border-bottom-color: rgba(165, 155, 155, 0.5);
+                }
+            }
+        }
+    }
+}
