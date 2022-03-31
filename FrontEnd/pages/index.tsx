@@ -5,13 +5,16 @@ import getMembers from '../services/services'
 import { membersAdapter } from '../adapters/members.adapter'
 import { useDispatch, useSelector } from 'react-redux'
 import { createMemberList } from '../redux/states/members'
+import { AppStore } from '@/redux/store'
 
 export default function Home() {
   // const dispatch = useDispatch();
+  const user = useSelector((store: AppStore) => store.user);
 
   // useEffect(() => {
-  //   dispatch(createMemberList((props)));
   // }, [])
+
+  console.log(user)
 
   return (
     <div>

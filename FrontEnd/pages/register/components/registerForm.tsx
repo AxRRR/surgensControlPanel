@@ -1,7 +1,7 @@
 import { useForm } from "@/hooks/useForm";
 import Router from "next/router";
 import React, { useState } from "react";
-import { userAdaptar } from "../adapters/adaptars.auth";
+import { userRegisterAdaptar } from "../adapters/adaptars.auth";
 import { Error } from "../models/register.models";
 import { registerUser, validateCodeEmail } from "../services/register.services";
 
@@ -23,7 +23,7 @@ export const RegisterForm = ({ user }: { user: any }) => {
     const registerUserHandler = async(e: React.FormEvent) => {
         e.preventDefault();
     
-        const User = userAdaptar({
+        const User = userRegisterAdaptar({
             name: user.name,
             tag: user.tag,
             password: form.password,
@@ -45,8 +45,7 @@ export const RegisterForm = ({ user }: { user: any }) => {
         });
 
         if(!userRegisterEmail.status) return setError({errors: [ userRegisterEmail.error ]})
-        // Falta implementar cookies
-        Router.push('/')
+        Router.push('/login')
     }
 
     return(

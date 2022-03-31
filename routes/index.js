@@ -1,4 +1,5 @@
 const express =         require('express');
+const { isValidJWT } = require('../middlewares/jwt');
 const { authLogin } =   require('../services/admin/controller');
 const { 
     createMember, 
@@ -24,15 +25,15 @@ const router = express.Router();
 
 // Request Clan
 router.use('/clans', getListOfClans);
-router.use('/specific_clan', getSpecificClan);
+router.use('/specific_clan', isValidJWT, getSpecificClan);
 router.use('/all_members', getListOfMembers);
 router.use('/specific_member', getSpecificMember);
-router.use('/specific_top', getTopSpecificClan);
+router.use('/specific_top', isValidJWT, getTopSpecificClan);
 router.use('/all_top', getListOfTopClans);
-router.use('/get_donations', getSpecificDonationsClan);
-router.use('/all_donations', getDonationsClans);
-router.use('/get_warlog', getSpecificWar);
-router.use('/all_warlog', getWarlogClans);
+router.use('/get_donations', isValidJWT, getSpecificDonationsClan);
+router.use('/all_donations', isValidJWT, getDonationsClans);
+router.use('/get_warlog', isValidJWT, getSpecificWar);
+router.use('/all_warlog', isValidJWT, getWarlogClans);
 
 // Authentication
 router.use('/auth/register', createMember);

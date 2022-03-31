@@ -7,12 +7,12 @@ require('dotenv').config();
 const router = require('./routes');
 const axios = require('./utils/axios');
 
+dbConnection();
 app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-dbConnection();
 
 axios.interceptors.request.use(req => {
 

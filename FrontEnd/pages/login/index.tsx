@@ -1,8 +1,12 @@
+import { User, userAdapter } from "@/adapaters/user.adapter";
 import { Layout } from "@/components/layout/layout";
 import { useForm } from "@/hooks/useForm";
+import { createUser } from "@/redux/states/user";
+import { authCookieStorage } from "@/utilities/jwt.utilitties";
 import Router from "next/router";
 import { Error } from "pages/register/models/register.models";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { LoginUser } from "./services/login.services";
 
 
@@ -10,7 +14,8 @@ import { LoginUser } from "./services/login.services";
 const Login = () => {
 
     const [error, setError] = useState<Error>({errors: []})
-
+    
+    const dispatch = useDispatch();
     const [form, inputChange] = useForm({
         name: '',
         password: ''
@@ -26,7 +31,22 @@ const Login = () => {
 
         if(!userLogging.status) return setError({errors: [ userLogging.error ]})
 
-        // Poner cookies y meter al redux el user.
+        const { name_member, email_member, role_member, tag_member }
+            : User = userLogging.data.member_info;
+        
+        // Seteamos el JWT en el localStorage.
+        authCookieStorage()?.set(userLogging.data.token);
+        const adaptedUser = userAdapter({
+            name_member,
+            email_member,
+            role_member,
+            tag_member,
+        }, userLogging.data.token);
+
+        // Insertamos la información del User a Redux.
+        dispatch(
+            createUser(adaptedUser)
+        );
         Router.push('/')
     }
 

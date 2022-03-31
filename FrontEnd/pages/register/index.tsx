@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { membersAdapter } from "../../adapters/members.adapter";
 import { Layout } from "@/components/layout/layout";
 import { createMemberList } from "../../redux/states/members";
-import getMembers from "../../services/services";
 import { SearchMember } from "./components/searchMember";
 import { RegisterForm } from "./components/registerForm";
+import getMembers from "@/services/public.services";
 
 
 const Register = (props: { props: any }) => {
