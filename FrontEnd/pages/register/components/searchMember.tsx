@@ -7,7 +7,7 @@ import { ShowMemberSelect } from "./showMemberSelect";
 export interface UserSelect {
     hideModal: (set: boolean) => void,
     hideComponent: (set: boolean) => void,
-    setMemberSelect: (set: string) => void,
+    setMemberSelect: (set: string | number | object) => void,
     payload: {
         name: string,
         role: string,
@@ -20,7 +20,7 @@ export interface UserSelect {
 interface Props { 
     memberSearch: string, 
     hideComponent: (set: boolean) => void,
-    setMemberSelect: (set: string) => void
+    setMemberSelect: (set: string | number | object) => void
 }
 
 interface MapModel {

@@ -14,6 +14,8 @@ const createMember = async(req, res) => {
     if(!req.body.tag_member)        return res.sendStatus(statusResolve.badRequest);
     if(!req.body.password_member)   return res.sendStatus(statusResolve.badRequest);
 
+    console.log('El request del controller', req.body)
+
     createUser(req.body)
         .then((data) => {
             sendConfirmMail(
@@ -28,7 +30,7 @@ const createMember = async(req, res) => {
         })
         .catch((error) => {
             res.status(statusResolve.success).json({
-                status: true,
+                status: false,
                 error
             })
         })
@@ -104,14 +106,14 @@ const loginMember = async(req, res) => {
         })
         .catch((error) => {
             res.status(statusResolve.success).json({
-                status: true,
+                status: false,
                 error
             })
         })
 }
 
 const validateMemberTag = async(req, res) => {
-    console.log(req.body)
+    console.log('El tag', req.body)
     if(!req.body.tag)    return res.sendStatus(statusResolve.badRequest);
 
     validateTag(req.body)

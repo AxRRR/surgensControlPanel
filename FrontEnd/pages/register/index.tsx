@@ -12,7 +12,7 @@ import { RegisterForm } from "./components/registerForm";
 const Register = (props: { props: any }) => {
 
     const [showSearchMembers, setShowSearchMembers] = useState(true);
-    const [setMemberSelect, setSetMemberSelect] = useState('');
+    const [setMemberSelect, setSetMemberSelect] = useState({});
     const [values, setValues] = useState({
         search: ''
     });
@@ -53,7 +53,7 @@ const Register = (props: { props: any }) => {
                 {
                     !showSearchMembers &&
                     <Fragment>
-                        <RegisterForm tag={setMemberSelect} />
+                        <RegisterForm user={setMemberSelect} />
                     </Fragment>
                 }
                 <section>

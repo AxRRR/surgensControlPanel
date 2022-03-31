@@ -1,6 +1,6 @@
 import { ModalInfo } from "@/components/ui/modalInfo";
 import { useState } from "react";
-import { validateTag } from "../services/services.auth";
+import { validateTag } from "../services/register.services";
 import { RegisterForm } from "./registerForm";
 import { UserSelect } from "./searchMember"
 
@@ -19,7 +19,7 @@ export const ShowMemberSelect = ({ payload, hideModal, hideComponent, setMemberS
             // )
             // <div><RegisterForm tag={payload.tag} /></div>
         }
-        setMemberSelect(payload.tag);
+        setMemberSelect({name: payload.name, tag: payload.tag});
         hideComponent(false);
     }
     

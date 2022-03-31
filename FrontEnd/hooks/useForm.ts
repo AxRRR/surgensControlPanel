@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
-export const useForm = (inicialState = {} ) => {
-    const [values, setValues] = useState(inicialState);
+export const useForm = (inicialState: object | string): [any, (event: React.ChangeEvent<HTMLInputElement>) => void] => {
+    const [values, setValues] = useState({});
     const [showForm, setShowForm] = useState(false);
 
-    const inputChange = ({ target }: any) => {
+    const inputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({
             ...values,
-            [target.name]: target.value
+            [event.target.name ]: event.target.value
         })
     }
 
-    const showFormChange = () => {
-        return showForm ? setShowForm(false) : setShowForm(true);
-    }
+    // const showFormChange = () => {
+    //     return showForm ? setShowForm(false) : setShowForm(true);
+    // }
 
-    return [ values, inputChange, showFormChange, showForm, setShowForm ];
+return [ values, inputChange, /*showFormChange, showForm, setShowForm*/ ];
 }

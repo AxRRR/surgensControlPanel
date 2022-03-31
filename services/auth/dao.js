@@ -6,9 +6,9 @@ const { VerificationCode } = require("./utilities");
 module.exports = {
     createUser(user){
         return new Promise(async(resolve, reject) => {
-            let userData = await Auth.findOne({ name_member: user.name_member });
-            if(userData) return reject('Este usuario ya se encuentra registrado.');
-            
+            let userData = await Auth.findOne({ email_member: user.email_member });
+
+            if(userData != null) return reject('El email que ingresaste ya esta registrado.');            
             userData = new Auth(user);
             userData.password_member = bcrypt.hashSync(user.password_member, bcrypt.genSaltSync());
             userData.role_member = 'Member';
@@ -16,7 +16,7 @@ module.exports = {
 
             // Comprobamos que se haya hecho bien el save
             // en caso de que no, hacemos un catch y retornamos el error.
-            await userData.save().catch(() => reject('El tag del usuario ya esta tomado'))
+            await userData.save().catch(() => reject('El email que ingresaste ya esta registrado.'))
 
             return resolve({ member_info: userData });
         } 

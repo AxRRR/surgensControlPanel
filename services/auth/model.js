@@ -3,18 +3,15 @@ const { Schema, model } = require('mongoose');
 const authSchema = Schema({
     tag_member: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     name_member: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email_member: {
         type: String,
-        require: true,
-        unique: true
+        require: true
     },
     password_member: {
         type: String,
