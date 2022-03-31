@@ -6,7 +6,7 @@ import { membersAdapter } from '../adapters/members.adapter'
 import { useDispatch, useSelector } from 'react-redux'
 import { createMemberList } from '../redux/states/members'
 
-export default function Home(props) {
+export default function Home() {
   // const dispatch = useDispatch();
 
   // useEffect(() => {
