@@ -1,8 +1,8 @@
 
 export interface User {
-    name: String,
-    password?: String,
-    tag: String,
-    role: String,
-    accessToken: String
+    name: string,
+    tag: string,
+    email: string,
+    role: string,
+    accessToken: string
 };

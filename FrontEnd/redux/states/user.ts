@@ -4,8 +4,8 @@ import { User } from '../../models/user.model';
 
 export const initialState: User = {
     name: '',
-    password: '',
     tag: '',
+    email: '',
     role: '',
     accessToken: ''
 };

@@ -1,12 +1,12 @@
 
-export interface User {
+interface User {
     name: string,
     tag: string,
     email: string,
     password: string
 }
 
-export const userAdaptar = (user: User) => {
+export const userRegisterAdaptar = (user: User) => {
     return {
         name_member: user.name,
         tag_member: user.tag,
