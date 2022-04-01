@@ -27,7 +27,6 @@ export const ClansScreen = ({ clans }: Clan) => {
                 <img 
                   alt='image'
                   src='https://i.blogs.es/2d6aab/portada-guia-mazo-clash-royale-megacaballero-cementerio/1366_2000.jpeg'
-                  // className='home__news-image'
                 />
                 <p>¿Como aplicar a nuestros clanes?</p>
                 <footer>
@@ -38,7 +37,6 @@ export const ClansScreen = ({ clans }: Clan) => {
                 <img 
                   alt='image'
                   src='https://www.actualidadiphone.com/wp-content/uploads/2016/03/Clash-Royale-768x370.jpg.webp'
-                  // className='home__news-image'
                 />
                 <p>¡Ha comenzado la Guerra de Clanes!</p>
                 <footer>

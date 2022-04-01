@@ -1,0 +1,52 @@
+
+.home__profile {
+    width: 100%;  
+    display: flex;
+    &-Bio{
+        width: 50%;
+        // background-color: antiquewhite;
+        img{
+            width: 90%;
+            border-radius: 1rem;
+            height: 8rem;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+    }
+    &-Name{
+        width: 70%;
+        h1{
+            margin: 0;
+        }
+        p{
+            margin: 0;
+        }
+    }
+    &-Stats{
+        // background-color: aqua;
+        display: flex;
+        section{
+            width: 40%;
+            padding: .5rem;
+            margin-bottom: 1rem;
+            background-color: aliceblue;
+            margin-right: 2rem;
+            text-align: center;
+            border-radius: 1rem;
+            h2{
+                margin: 0;
+            }
+            h3{
+                margin: 0;
+                font-size: 20px;
+                font-weight: 0;
+            }
+        }
+    }
+}
+
+.home__footer{
+    p{
+        text-align: center;
+    }
+}
