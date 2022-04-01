@@ -1,11 +1,13 @@
 
 .navigation{
-    background-color: rgb(233, 233, 233);
+    background-color: $SECOND_WHITE_COLOR;
     position: fixed;
     width: 100%;
-    top: 0;
+    bottom: 0;
     z-index: -1;
-    height: 3.5rem;
+    height: 5rem;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
     ul{
         display: flex;
         list-style: none;
