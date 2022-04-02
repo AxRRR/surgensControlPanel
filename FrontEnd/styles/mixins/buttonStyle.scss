@@ -1,0 +1,7 @@
+
+@mixin buttonStyle($c) {
+    background-color: $c;
+    border-color: transparent;
+    color: white;
+    border-radius: .4rem;
+}

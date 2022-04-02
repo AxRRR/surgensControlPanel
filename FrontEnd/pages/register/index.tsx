@@ -7,6 +7,7 @@ import { createMemberList } from "../../redux/states/members";
 import { SearchMember } from "./components/searchMember";
 import { RegisterForm } from "./components/registerForm";
 import getMembers from "@/services/public.services";
+import { Container } from "@/components/ui";
 
 
 const Register = (props: { props: any }) => {
@@ -32,44 +33,47 @@ const Register = (props: { props: any }) => {
 
     return (
         <Layout>
-            <div className='register'>
-                {
-                    showSearchMembers && <Fragment>
-                    <h1>Encuentra tu tag</h1>
-                    <p>
-                        Antes de continuar con el registro
-                        por favor introduce tu nombre en el juego.
-                    </p>
-                    <p>
-                        Selecciona un usuario de la lista para 
-                        registrarlo.
-                    </p>
-                    <input 
-                        name='search'
-                        onChange={inputChange}
-                    />
-                    </Fragment>
-                }
-                {
-                    !showSearchMembers &&
-                    <Fragment>
-                        <RegisterForm user={setMemberSelect} />
-                    </Fragment>
-                }
-                <section>
+            <Container>
+                <div className='register'>
                     {
-                        values.search !== '' && showSearchMembers && 
+                        showSearchMembers && 
+                        <Fragment>
+                            <h1>Encuentra tu tag</h1>
+                            <p>
+                                Antes de continuar con el registro
+                                por favor introduce tu nombre en el juego.
+                            </p>
+                            <p>
+                                Selecciona un usuario de la lista para 
+                                registrarlo.
+                            </p>
+                            <input 
+                                name='search'
+                                onChange={inputChange}
+                            />
+                        </Fragment>
+                    }
+                    {
+                        !showSearchMembers &&
+                        <Fragment>
+                            <RegisterForm user={setMemberSelect} />
+                        </Fragment>
+                    }
+                    <section>
+                        {
+                            values.search !== '' && showSearchMembers && 
                             <SearchMember 
                                 memberSearch={values.search} 
                                 hideComponent={setShowSearchMembers}
                                 setMemberSelect={setSetMemberSelect}
                             />
-                    }
-                    {
-
-                    }
-                </section>
-            </div>
+                        }
+                        {
+                            
+                        }
+                    </section>
+                </div>
+            </Container>
         </Layout>
     )
 }

@@ -1,6 +1,16 @@
 
 @import './colors.scss';
+
+@import './mixins/fontstyle.scss';
+@import './mixins/buttonStyle.scss';
+
 @import './globals.scss';
 
 @import './components/register.scss';
 @import './components/navigation.scss';
+@import './components/container.scss';
+@import './components/section.scss';
+@import './components/utils.scss';
+@import './components/profile.scss';
+@import './components/top.scss';
+@import './components/footer.scss';

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { Navigation } from "../navigation/navigation";
+import { Footer } from "./footer/footer";
+import { Navigation } from "./navigation/navigation";
 
 export const Layout = ({ children }: { children: ReactNode }) => {
     return (
@@ -10,6 +11,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             <article>
                 {children}
             </article>
+            <footer>
+                <Footer />
+            </footer>
         </div>
     )
 } 

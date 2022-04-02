@@ -1,7 +1,6 @@
 
 import { useEffect } from 'react'
 import { membersAdapter } from '../../adapters/members.adapter';
-import getMembers from '../../services/services';
 
 export const Dashboard = () =>  {
 

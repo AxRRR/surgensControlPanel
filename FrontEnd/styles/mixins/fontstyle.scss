@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'AlumniSans';
+    src: url('../../assets/fonts/BarlowCondensed-ExtraLight.ttf');
+}
+
+@font-face {
+    font-family: 'BebasNeue';
+    src: url('../../assets/fonts/BebasNeue-Regular.ttf');
+}
+
+@mixin fontstyle(
+    $type, 
+    $size,
+    $color
+) {
+    @if $type == 'Sans' {
+        font-family: 'AlumniSans';
+    }
+    @else{
+        font-family: 'BebasNeue';
+    }
+    font-size: $size;
+    color: $color;
+}
