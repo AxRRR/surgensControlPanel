@@ -13,4 +13,12 @@
         width: 100%;
         margin-top: 1.2rem;
     }
-  }
+    &__process{
+        @include buttonStyle($PRIMARY_BUTTON);
+        @include fontstyle('Sans', 20px, white);
+        height: 3rem;
+        width: 100%;
+        margin-top: 1.2rem;
+        margin-bottom: 2rem;
+    }
+}
