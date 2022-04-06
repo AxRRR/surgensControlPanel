@@ -12,12 +12,11 @@ export interface Clan {
 }
 
 export const ClansScreen = ({ clans }: Clan) => {
-    console.log('El typeof', typeof clans, clans)
     return (
         <Container>
           <Section config={{ enable: true, flex: false, text: 'Clanes de Surgens'}}>
               {
-                clans.map((clan: any) => <div>
+                clans.map((clan: any, index: number) => <div key={index}>
                   <p><FontAwesomeIcon icon={faUserGroup} /> {clan.name} {clan.members}/50 (estado: {clan.type})</p>
                 </div>)
               }

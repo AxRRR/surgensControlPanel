@@ -63,17 +63,16 @@ export const RegisterForm = ({ user }: { user: any }) => {
                         Nota: Te enviaremos un correo electronica para confirmar tu email.
                         La cuenta estará pendiente hasta ser confirmada tu identidad.
                     </p>
-                    {/* <p></p> */}
                     <input 
                         name='email'
                         onChange={inputChange}
-                        placeholder='correo electronico' 
+                        placeholder='Correo electronico' 
                     />
                     <input 
                         name='password'
                         onChange={inputChange}
                         type='password'
-                        placeholder='contraseña' 
+                        placeholder='Contraseña' 
                     />
                     <button className='button__process'>Registrarme</button>
                 </form>

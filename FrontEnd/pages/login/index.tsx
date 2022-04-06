@@ -1,5 +1,6 @@
 import { User, userAdapter } from "@/adapaters/user.adapter";
 import { Layout } from "@/components/layout/layout";
+import { Container, Section } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
 import { createUser } from "@/redux/states/user";
 import { authCookieStorage } from "@/utilities/jwt.utilitties";
@@ -31,17 +32,19 @@ const Login = () => {
 
         if(!userLogging.status) return setError({errors: [ userLogging.error ]})
 
-        const { name_member, email_member, role_member, tag_member }
+        const { _id, name_member, email_member, role_member, tag_member }
             : User = userLogging.data.member_info;
         
-        // Seteamos el JWT en el localStorage.
-        authCookieStorage()?.set(userLogging.data.token);
         const adaptedUser = userAdapter({
+            _id,
             name_member,
             email_member,
             role_member,
             tag_member,
         }, userLogging.data.token);
+
+        // Seteamos el JWT en el localStorage.
+        authCookieStorage()?.set(userLogging.data.token, adaptedUser.tag, adaptedUser.id);
 
         // Insertamos la información del User a Redux.
         dispatch(
@@ -52,24 +55,31 @@ const Login = () => {
 
     return (
         <Layout>
-            {error.errors.length >= 1 && <div>
-                {
-                    error.errors.map((err, index) => <p key={index}>{err}</p>)
-                }
-            </div>}
-            <form onSubmit={loginUser}>
-                <input 
-                    type='text'
-                    name='name'
-                    onChange={inputChange}
-                />
-                <input 
-                    type='password'
-                    name='password'
-                    onChange={inputChange} 
-                />
-                <button>Ingresar</button>
-            </form>
+            <Container>
+                <Section config={{ enable: true, flex: false, text: 'Inicia sesión' }}>
+
+                    {error.errors.length >= 1 && <div>
+                        {
+                            error.errors.map((err, index) => <p key={index}>{err}</p>)
+                        }
+                    </div>}
+                    <form onSubmit={loginUser}>
+                        <input 
+                            type='text'
+                            name='name'
+                            placeholder='Nombre de usuario'
+                            onChange={inputChange}
+                        />
+                        <input 
+                            type='password'
+                            name='password'
+                            placeholder='Contraseña'
+                            onChange={inputChange} 
+                        />
+                        <button className='button__process'>Ingresar</button>
+                    </form>
+                </Section>
+            </Container>
         </Layout>
     )
 }

@@ -15,5 +15,5 @@ export const useForm = (inicialState: object | string): [any, (event: React.Chan
     //     return showForm ? setShowForm(false) : setShowForm(true);
     // }
 
-return [ values, inputChange, /*showFormChange, showForm, setShowForm*/ ];
+    return [ values, inputChange, /*showFormChange, showForm, setShowForm*/ ];
 }

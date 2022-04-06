@@ -5,7 +5,8 @@ const {
     createMember, 
     loginMember, 
     validateMemberTag, 
-    emailVerification
+    emailVerification,
+    autoLogin
 } =                     require('../services/auth/controller');
 const { 
     getListOfClans, 
@@ -27,7 +28,7 @@ const router = express.Router();
 router.use('/clans', getListOfClans);
 router.use('/specific_clan', isValidJWT, getSpecificClan);
 router.use('/all_members', getListOfMembers);
-router.use('/specific_member', getSpecificMember);
+router.use('/specific_member', isValidJWT, getSpecificMember);
 router.use('/specific_top', isValidJWT, getTopSpecificClan);
 router.use('/all_top', getListOfTopClans);
 router.use('/get_donations', isValidJWT, getSpecificDonationsClan);
@@ -38,6 +39,7 @@ router.use('/all_warlog', isValidJWT, getWarlogClans);
 // Authentication
 router.use('/auth/register', createMember);
 router.use('/auth/login', loginMember);
+router.use('/auth/getuser', isValidJWT, autoLogin);
 router.use('/auth/validate_tag', validateMemberTag);
 router.use('/auth/confirm_email', emailVerification)
 

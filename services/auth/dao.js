@@ -34,6 +34,9 @@ module.exports = {
             return resolve({ member_info: userData, token: tokenAccess });
         } 
     )},
+    getUser(id){
+        return Auth.findById(id).then((user) => user).catch(() => 'No se pudo encontrar a este usuario')
+    },
     validateTag(tag){
         return new Promise(async(resolve, reject) => {
             const tagExist = await Auth.findOne({ tag_member: tag.tag });
