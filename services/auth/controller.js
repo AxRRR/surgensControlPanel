@@ -5,7 +5,8 @@ const {
     createUser, 
     loginUser, 
     validateTag,     
-    verificationUserEmail
+    verificationUserEmail,
+    getUser
 } =                             require("./dao");
 
 
@@ -112,8 +113,31 @@ const loginMember = async(req, res) => {
         })
 }
 
+const autoLogin = (req, res) => {
+    if(!req.body.id)       return res.sendStatus(statusResolve.badRequest);
+
+    getUser(req.body.id)
+        .then(({ _id, tag_member, name_member, role_member, email_member }) => {
+            res.status(statusResolve.success).json({
+                status: true,
+                data: {
+                    _id,
+                    tag_member,
+                    name_member,
+                    role_member,
+                    email_member
+                }
+            })
+        })
+        .catch((error) => {
+            res.status(statusResolve.badRequest).json({
+                status: false,
+                error
+            })
+        })
+}
+
 const validateMemberTag = async(req, res) => {
-    console.log('El tag', req.body)
     if(!req.body.tag)    return res.sendStatus(statusResolve.badRequest);
 
     validateTag(req.body)
@@ -135,6 +159,7 @@ const validateMemberTag = async(req, res) => {
 module.exports = {
     createMember,
     loginMember,
+    autoLogin,
     validateMemberTag,
     reSendMail,
     emailVerification

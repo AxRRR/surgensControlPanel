@@ -39,7 +39,22 @@ input {
   font-size: 18px;
   margin: auto;
   margin-bottom: 1rem;
-  @include fontstyle('Sans', 23px, black);
+  @include fontstyle('Sans', 18px, rgb(62, 62, 62));
+  height: 3rem;
+  text-align: center;
+  background-color: aliceblue;
+  border-color: transparent;
+  &:focus{
+      outline:none;
+  } 
+}
+
+.img-Card {
+  width: 90%;
+  border-radius: 1rem;
+  height: 8rem;
+  margin-right: 1rem;
+  object-fit: cover;
 }
 
 .layout{

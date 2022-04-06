@@ -26,7 +26,7 @@ const isValidJWT = (req, res = response, next) => {
     } catch (error) {
         return res.status(401).json({
             ok: false,
-            msg: 'Token invalido.'
+            msg: 'El token ha expirado, por favor inicia sesión de nuevo.'
         });
     }
 

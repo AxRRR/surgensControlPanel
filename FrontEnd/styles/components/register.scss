@@ -3,17 +3,6 @@
     width: 90%;
     margin: auto;
     text-align: center;
-    input{
-        width: 90%;
-        height: 3rem;
-        font-size: 18px;
-        text-align: center;
-        background-color: aliceblue;
-        border-color: transparent;
-        &:focus{
-            outline:none;
-        } 
-    }
     &__modal{
         width: 100%;
         top: 0;

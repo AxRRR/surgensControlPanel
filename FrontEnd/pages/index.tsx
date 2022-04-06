@@ -10,8 +10,6 @@ export default function Home() {
   // useEffect(() => {
   // }, [])
 
-  console.log(user)
-
   return (
     <Layout>
       <Container>

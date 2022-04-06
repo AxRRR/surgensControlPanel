@@ -7,10 +7,20 @@ export const Navigation = () => {
     return (
         <div className='navigation'>
             <section>
-                <article><FontAwesomeIcon icon={faUser} /></article>
-                <article><FontAwesomeIcon icon={faChartLine} /></article>
-                <article><FontAwesomeIcon icon={faBell} /></article>
-                <article><FontAwesomeIcon icon={faMessage} /></article>
+                <article>
+                    {/* <link > */}
+                        <FontAwesomeIcon icon={faUser} />
+                    {/* </link> */}
+                </article>
+                <article>
+                    <FontAwesomeIcon icon={faChartLine} />
+                </article>
+                <article>
+                    <FontAwesomeIcon icon={faBell} />
+                    </article>
+                <article>
+                    <FontAwesomeIcon icon={faMessage} />
+                </article>
             </section>
         </div>
     )

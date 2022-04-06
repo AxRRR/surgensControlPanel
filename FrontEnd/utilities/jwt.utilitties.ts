@@ -4,13 +4,13 @@ export const authCookieStorage = () => {
         const get = () => {
             const authLocal = localStorage.getItem('authUser');
             // Verificamos primero que exista la cookie.
-            if(authLocal === null) return { error: 'No existe la cookie en el localStorage.' }
+            if(authLocal === null) return { status: false, error: 'No existe la cookie en el localStorage.' }
             // Si existe lo retornamos ya parseado.
-            return { jwt: JSON.parse(authLocal) }
+            return { status: true, data: JSON.parse(authLocal) }
         }
         
-        const set = (newJWT: string) => {
-            return localStorage.setItem('authUser', JSON.stringify(newJWT))
+        const set = (newJWT: string, tag: string, id: string) => {
+            return localStorage.setItem('authUser', JSON.stringify({ jwt: newJWT, tag, id }))
         }
         
         const clear = () => {

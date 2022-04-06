@@ -49,6 +49,7 @@ const Register = (props: { props: any }) => {
                             </p>
                             <input 
                                 name='search'
+                                placeholder='Ingresa tu nombre del juego'
                                 onChange={inputChange}
                             />
                         </Fragment>
