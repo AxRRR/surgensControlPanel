@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 
 export const AuthScreen = () => {
   const user = useSelector((store: AppStore) => store.user);
+
+  console.log('El user de redux', user)
   
   return (
       <Container>

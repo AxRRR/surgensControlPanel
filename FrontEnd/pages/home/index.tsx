@@ -4,7 +4,7 @@ import { AuthScreen }                 from './components/authScreen'
 import { ClansScreen }                from './components/clansScreen'
 import { getAllClans, getAllTop }     from '@/services/public.services'
 import { TopScreen }                  from './components/topScreen'
-import { useUserLogin } from '@/hooks/useUserLogin'
+import { useUserLogin }               from '@/hooks/useUserLogin'
 
 
 const HomePage = ({ clansData, top } : { clansData: any, top: any }) => {
