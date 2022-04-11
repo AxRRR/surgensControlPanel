@@ -1,17 +1,26 @@
 
+import { Layout } from '@/components/layout/layout';
+import { Container, Section } from '@/components/ui';
 import { useEffect } from 'react'
 import { membersAdapter } from '../../adapters/members.adapter';
+import { AcceptMember } from './components/AcceptMember';
+import { LastestNews } from './components/LastestNews';
+import { AscentRecommendations } from './components/leaderClan/AscentRecommendations';
+import { ListOfMembers } from './components/ListOfMembers';
+import { LastestReports } from './components/moderator/LastestReports';
 
-export const Dashboard = () =>  {
-
-  useEffect(() => {
-    // const data = await getMembers();
-    // const payload = membersAdapter(data);
-  }, [])
+const Dashboard = () =>  {
 
   return (
-    <div>
-      <h1>Bienvenido a Surgens Control Panel</h1>
-    </div>
+    <Layout>
+        <h1>Dashboard Surgens</h1>
+        <LastestNews />
+        <LastestReports />
+        <AcceptMember />
+        <AscentRecommendations />
+        <ListOfMembers />
+    </Layout>
   )
 }
+
+export default Dashboard;
