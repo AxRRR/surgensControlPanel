@@ -20,7 +20,6 @@ export const RegisterForm = ({ user }: { user: any }) => {
         code: ''
     });
 
-
     const registerUserHandler = async(e: React.FormEvent) => {
         e.preventDefault();
     
