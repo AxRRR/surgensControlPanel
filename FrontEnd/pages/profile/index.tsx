@@ -38,12 +38,22 @@ const Profile = () => {
         }
         setUser();
     }, [])
+
+    const userHasPrivilege = () => {
+        // Si el tag del user es igual al perfil que intenta acceder
+        // O si el usuario es Mod, Admin o Colider.
+        if(user.tag.slice(1) === asPath.slice(13)){
+            return true;
+        } else if(user.role === 'Moderador' || 'Administrador' || 'LiderCantera') {
+            return true;
+        }
+        // Si el tag no coinciden y si tampoco tiene rango... entonces retornamos false.
+        return false;
+    }
     
     return (
         <Layout>
-            {/* Solo disponible si el tag del user y el query es igual
-                o si el user es mod, admin o colider               */}
-            {userMount && user.role !== '' || user.role === 'Mod' && user.tag.slice(1) === asPath.slice(13) 
+            {userMount && user.role !== '' && userHasPrivilege()  
             ? <Fragment>
                 <BioUser User={userData}                                />
                 <ClanUser ClanInfo={userData}                           />
