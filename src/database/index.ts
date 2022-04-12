@@ -1,9 +1,18 @@
-const mongoose = require('mongoose');
 
-const dbConnection = async() => {
+import chalk from 'chalk';
+import mongoose from 'mongoose';
+
+declare var process : {
+    env: {
+      DB_CNN: string
+    }
+}
+
+export const dbConnection = async() => {
     try {
         
         await mongoose.connect(process.env.DB_CNN);
+        // console.info(chalk.blue('[Info]'), 'Database: Successful Connection');
         console.log('         Database: Successful Connection');
 
 
@@ -14,7 +23,3 @@ const dbConnection = async() => {
 
 }
 
-
-module.exports = {
-    dbConnection
-}

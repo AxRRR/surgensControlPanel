@@ -1,5 +1,5 @@
 const axios = require('axios').default;
 
-module.exports = axios.create({
+export const client = axios.create({
     baseURL: 'https://api.clashroyale.com/v1/'
 })

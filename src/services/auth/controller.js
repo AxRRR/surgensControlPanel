@@ -77,6 +77,30 @@ const reSendMail = (req, res) => {
     })
 }
 
+const autoLogin = (req, res) => {
+    if(!req.body.id)       return res.sendStatus(statusResolve.badRequest);
+
+    getUser(req.body.id)
+        .then(({ _id, tag_member, name_member, role_member, email_member }) => {
+            res.status(statusResolve.success).json({
+                status: true,
+                data: {
+                    _id,
+                    tag_member,
+                    name_member,
+                    role_member,
+                    email_member
+                }
+            })
+        })
+        .catch((error) => {
+            res.status(statusResolve.badRequest).json({
+                status: false,
+                error
+            })
+        })
+}
+
 const emailVerification = (req, res) => {
     verificationUserEmail(req.body, req.body.code)
         .then(() => {
@@ -137,5 +161,6 @@ module.exports = {
     loginMember,
     validateMemberTag,
     reSendMail,
+    autoLogin,
     emailVerification
 }
