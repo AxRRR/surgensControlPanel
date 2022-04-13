@@ -1,0 +1,25 @@
+.button {
+    &__green{
+        @include buttonStyle(transparent, $SECONDARY_BUTTON);
+        @include fontstyle('Sans', 18px, $SECONDARY_BUTTON);
+        height: 3rem;
+        width: 100%;
+        margin-top: 1.2rem;
+        margin-bottom: 2rem;
+    }
+    &__red{
+        @include buttonStyle(transparent, $PRIMARY_BUTTON);
+        @include fontstyle('Sans', 18px, $PRIMARY_BUTTON);
+        height: 30%;
+        width: 100%;
+        margin-top: 1.2rem;
+    }
+    &__process{
+        @include buttonStyle(transparent, $PRIMARY_BUTTON);
+        @include fontstyle('Sans', 20px, $PRIMARY_BUTTON);
+        height: 3rem;
+        width: 100%;
+        margin-top: 1.2rem;
+        margin-bottom: 2rem;
+    }
+}

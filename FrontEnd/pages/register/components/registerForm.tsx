@@ -1,3 +1,4 @@
+import { Section } from "@/components/ui";
 import { useForm } from "@/hooks/useForm";
 import Router from "next/router";
 import React, { useState } from "react";
@@ -19,7 +20,6 @@ export const RegisterForm = ({ user }: { user: any }) => {
         code: ''
     });
 
-
     const registerUserHandler = async(e: React.FormEvent) => {
         e.preventDefault();
     
@@ -29,7 +29,6 @@ export const RegisterForm = ({ user }: { user: any }) => {
             password: form.password,
             email: form.email
         });
-
         
         const userRegister = await registerUser(User);
         if(!userRegister.status) return setError({errors: [ userRegister.error ]})
@@ -58,29 +57,38 @@ export const RegisterForm = ({ user }: { user: any }) => {
                     }
                 </div>}
                 <form onSubmit={registerUserHandler}>
+                    <p>Para seguir con el proceso de registro llena los campos.</p>
+                    <p>
+                        Nota: Te enviaremos un correo electronica para confirmar tu email.
+                        La cuenta estará pendiente hasta ser confirmada tu identidad.
+                    </p>
                     <input 
                         name='email'
                         onChange={inputChange}
-                        placeholder='correo electronico' 
-                        />
+                        placeholder='Correo electronico' 
+                    />
                     <input 
                         name='password'
                         onChange={inputChange}
                         type='password'
-                        placeholder='contraseña' 
-                        />
-                    <button>Registrarme</button>
+                        placeholder='Contraseña' 
+                    />
+                    <button className='button__process'>Registrarme</button>
                 </form>
             </div>}
-            {!showForm && <div>
+            {!showForm && <Section config={{ enable: true, flex: false, text: 'Código de verificación' }}>
                 <form onSubmit={nextProcessRegisterHandler}>
+                    <p>Te hemos enviado un mail a tu correo electronico.
+                        Para continuar introduce el código que recibiste en tu bandeja de entrada.
+                    </p>
                     <input 
-                        placeholder='Introduce el código' 
+                        placeholder='Introduce el código que recibiste' 
                         name='code'
                         onChange={inputChangeSecond}
                     />  
+                    <button className='button__process'>Enviar</button>
                 </form>
-            </div>}
+            </Section>}
         </div>
     )
 }

@@ -1,0 +1,73 @@
+
+.dashboard {
+    &__reports{
+        h1{
+            font-size: 20px;
+            margin: 0;
+            color: grey;
+        }
+        h3{
+            font-size: 24px;
+            color: grey;
+            margin: 0;
+        }
+    }
+    &__ascent{
+        h1{
+            font-size: 20px;
+            color: grey;
+            margin-top: 3rem;
+            color: #01a604;
+            text-align: center;
+        }
+        h3{
+            font-size: 24px;
+            color: grey;
+            margin: 0;
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    }
+    &__actions{ 
+        display: flex;
+    }
+    &__acceptmember{
+        padding: 1rem;
+        &-info{
+            display: flex;
+        }
+        h1{
+            font-size: 20px;
+            margin: 0;
+            color: grey;
+            width: 50%;
+        }
+        h3{
+            font-size: 20px;
+            color: grey;
+            margin: 0;
+        }
+    }
+    &__listmember{
+        text-align: center;
+        h1{
+            margin: 0;
+            color: grey;
+        }
+        p{
+            margin: 0;
+            margin-bottom: 1rem;
+        }
+        button{
+            background-color: aliceblue;
+            font-size: 16px;
+            width: 100%;
+            border-color: transparent;
+            height: 3rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    }
+}

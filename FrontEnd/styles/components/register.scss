@@ -3,24 +3,10 @@
     width: 90%;
     margin: auto;
     text-align: center;
-    // box-shadow : 0px 0px 10px rgb( 100 , 100 , 100 );
-    input{
-        width: 90%;
-        height: 3rem;
-        font-size: 18px;
-        text-align: center;
-        // border-color: transparent;
-        // border-color: aqua;
-        background-color: aliceblue;
-        border-color: transparent;
-        // border-bottom-color: rgba(165, 155, 155, 0.5);
-        &:focus{
-            outline:none;
-        } 
-    }
     &__modal{
-        width: 90%;
+        width: 100%;
         top: 0;
+        left: 0;
         height: 100vh;
         z-index: 20;
         backdrop-filter: blur(1rem);
@@ -33,7 +19,6 @@
             margin-left: auto;
             margin-right: auto;
             article{
-                // background-color: antiquewhite;
                 padding: 1rem;
                 margin-top: 0;
                 p{
@@ -54,11 +39,9 @@
         }
     }
     &__showMembers{
-        // background-color: antiquewhite;
         width: 90%;
         margin: auto;
         div{
-            // background-color: aqua;
             display: flex;
             height: 4rem;
             section {
@@ -74,7 +57,6 @@
                     color: white;
                     font-weight: bolder;
                     border-color: transparent;
-                    // border-bottom-color: rgba(165, 155, 155, 0.5);
                 }
             }
         }

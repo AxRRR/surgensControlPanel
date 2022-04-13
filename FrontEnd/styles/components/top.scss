@@ -1,0 +1,43 @@
+
+.topMember{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color:rgb(100 ,100 ,100, 0.35);
+    &__place{
+        width: 10%;
+        p{
+            margin: 0;
+            width: 100%;
+        }
+    }
+    &__name{
+        display: block;
+        width: 60%;
+        p{
+            margin: 0;
+            flex-direction: column;
+            width: 100%;
+            @include fontstyle('Bebas', 17px, grey);
+        }
+        span{
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            flex-direction: column;
+            width: 100%;
+            @include fontstyle('Sans', 14px, grey);
+
+        }
+    }
+    &__trophies{
+        width: 30%;
+        p{
+            margin: 0;
+            width: 100%;
+        }
+    }
+}

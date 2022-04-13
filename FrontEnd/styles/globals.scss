@@ -14,8 +14,14 @@ body {
 // $WHITE_COLOR: #FFFFFF;
 // $GREY_COLOR: #D6D6D6;
 
-h1, h2, h3, h4, p, span {
+h1, h2, h3, h4 {
   color: black;
+  font-weight: lighter;
+  @include fontstyle('Bebas', 26px, black);
+}
+
+p, span {
+  @include fontstyle('Sans', 20px, black);
 }
 
 a {
@@ -28,14 +34,58 @@ a {
 }
 
 input {
-  width: 80%;
+  width: 100%;
   height: 3rem;
   font-size: 18px;
   margin: auto;
+  margin-bottom: 1rem;
+  @include fontstyle('Sans', 18px, rgb(62, 62, 62));
+  height: 3rem;
+  text-align: center;
+  background-color: aliceblue;
+  border-color: transparent;
+  &:focus{
+      outline:none;
+  } 
+}
+
+.img-Card {
+  width: 90%;
+  border-radius: 1rem;
+  height: 8rem;
+  margin-right: 1rem;
+  object-fit: cover;
 }
 
 .layout{
   article{
-    margin-top: 6rem;
+    margin-top: 3rem;
   }
 }
+
+.home {
+  &__news{
+    // background-color: aqua;
+    width: 100%;
+    height: auto;
+    img{
+      width: 95%;
+      height: 8rem;
+      margin-right: 1rem;
+      object-fit: cover;
+    }
+    p{
+      // background-color: aquamarine;
+      margin: 0;
+    }
+    footer{
+      // background-color: antiquewhite;
+      // text-align: center;
+      padding: .5rem 0rem .5rem 0rem;
+      p{
+        font-size: 16px;
+      }
+    }
+  }
+}
+

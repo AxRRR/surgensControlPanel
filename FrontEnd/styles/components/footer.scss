@@ -1,0 +1,17 @@
+
+.footer {
+    background-color: white;
+    height: 12rem;
+    section {
+        display: flex;
+        padding: 1rem;
+        p {
+            font-size: 22px;
+            margin: 0;
+        }
+    }
+    p {
+        text-align: right;
+        width: 100%;
+    }
+}

@@ -1,16 +1,25 @@
 
 .navigation{
-    background-color: rgb(233, 233, 233);
+    background-color: $SECOND_WHITE_COLOR;
     position: fixed;
     width: 100%;
-    top: 0;
-    z-index: -1;
-    height: 3.5rem;
-    ul{
+    bottom: 0;
+    z-index: 1;
+    height: 5rem;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    section{
         display: flex;
-        list-style: none;
-        li{
-            padding-right: .5rem;
+        margin: auto;
+        margin-top: 0px;
+        height: 100%;
+        width: 90%;
+        article{
+            margin-top: 1rem;
+            width: 100%;
+            font-size: 2rem;
+            color: grey;
+            padding-left: 1rem;
             font-weight: bold;
         }
     }
