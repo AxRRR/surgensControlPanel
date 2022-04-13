@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-// import { statusResolve } from "@/utils/status";
 import {
   getClan,
   getMembers,
@@ -9,13 +8,8 @@ import {
 } from './dao';
 import { statusResolve } from '../../utils/status';
 import { getAllClans } from './utils';
-// const {
-//     getMembers,
-//     getClan,
-//     getSpecificUser,
-//     getSpecificUserUpChest,
-//     getSpecificWarLog
-// } =                             require("./dao");
+
+// TODO: Agregar todos los tipos
 
 export const getListOfClans = async (req: Request, res: Response) => {
   const gettingClans = await getAllClans();

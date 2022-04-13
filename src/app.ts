@@ -1,11 +1,10 @@
 // const createError = require('http-errors');
-import { dbConnection } from './database';
 import express, { Request } from 'express';
 import cors from 'cors';
 import router from './routes';
+import { dbConnection } from './database';
 import { client } from './utils/axios';
-// import router from 'routes';
-// const router = require('./routes')
+
 const app = express();
 require('dotenv').config();
 
