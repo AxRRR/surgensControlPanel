@@ -1,8 +1,9 @@
 // const createError = require('http-errors');
 import { dbConnection } from './database';
-import express from 'express';
+import express, { Request } from 'express';
 import cors from 'cors';
 import router from './routes';
+import { client } from './utils/axios';
 // import router from 'routes';
 // const router = require('./routes')
 const app = express();
@@ -13,6 +14,12 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+client.interceptors.request.use((req: Request) => {
+    req.headers['authorization'] = `Bearer ${process.env.ACCESS_TOKEN_CR}`;
+    req.headers['content-type'] = 'application/x-www-form-urlencoded';
+    return req;
+});
 
 app.use('/v1', router);
 

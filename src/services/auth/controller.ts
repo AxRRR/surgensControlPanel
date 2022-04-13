@@ -1,23 +1,21 @@
+// import { statusResolve } from "@/utils/status";
+const statusResolve = require('../../utils/status')
+import { Request, Response } from "express";
+import { createUser, getUser, loginUser, validateTag, verificationUserEmail } from "./dao";
+// import { statusResolve } from "@/utils/status";
+
 const transport =               require("../../config/config.mailer");
-const { statusResolve } =       require("../../utils/status");
 const { VerificationCode } =    require("./utilities");
-const { 
-    createUser, 
-    loginUser, 
-    validateTag,     
-    verificationUserEmail
-} =                             require("./dao");
 
 
-const createMember = async(req, res) => {
+
+export const createMember = async(req: Request, res: Response) => {
     if(!req.body.name_member)       return res.sendStatus(statusResolve.badRequest);
     if(!req.body.tag_member)        return res.sendStatus(statusResolve.badRequest);
     if(!req.body.password_member)   return res.sendStatus(statusResolve.badRequest);
 
-    console.log('El request del controller', req.body)
-
     createUser(req.body)
-        .then((data) => {
+        .then((data: any) => {
             sendConfirmMail(
                 data.member_info.name_member, 
                 data.member_info.email_member, 
@@ -28,7 +26,7 @@ const createMember = async(req, res) => {
                 data
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
             res.status(statusResolve.success).json({
                 status: false,
                 error
@@ -37,7 +35,7 @@ const createMember = async(req, res) => {
 
 }
 
-const sendConfirmMail = async(name, email, code) => {
+export const sendConfirmMail = async(name: string, email: string, code: string) => {
     await transport.sendMail({
         from: '"New Surgens" newsurgens.royale@gmail.com',
         to: email,
@@ -64,7 +62,7 @@ const sendConfirmMail = async(name, email, code) => {
       });
 }
 
-const reSendMail = (req, res) => {
+export const reSendMail = (req: Request, res: Response) => {
     sendConfirmMail(
         req.body.name_member,
         req.body.email_member,
@@ -77,11 +75,11 @@ const reSendMail = (req, res) => {
     })
 }
 
-const autoLogin = (req, res) => {
+export const autoLogin = (req: Request, res: Response) => {
     if(!req.body.id)       return res.sendStatus(statusResolve.badRequest);
 
     getUser(req.body.id)
-        .then(({ _id, tag_member, name_member, role_member, email_member }) => {
+        .then(({ _id, tag_member, name_member, role_member, email_member }: any) => {
             res.status(statusResolve.success).json({
                 status: true,
                 data: {
@@ -93,7 +91,7 @@ const autoLogin = (req, res) => {
                 }
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
             res.status(statusResolve.badRequest).json({
                 status: false,
                 error
@@ -101,7 +99,7 @@ const autoLogin = (req, res) => {
         })
 }
 
-const emailVerification = (req, res) => {
+export const emailVerification = (req: Request, res: Response) => {
     verificationUserEmail(req.body, req.body.code)
         .then(() => {
             res.status(statusResolve.success).json({
@@ -109,7 +107,7 @@ const emailVerification = (req, res) => {
                 message: 'Se realizo correctamente la confirmación de correo.'
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
             res.status(statusResolve.success).json({
                 status: false,
                 message: error
@@ -117,18 +115,18 @@ const emailVerification = (req, res) => {
         });
 }
 
-const loginMember = async(req, res) => {
+export const loginMember = async(req: Request, res: Response) => {
     if(!req.body.name_member)       return res.sendStatus(statusResolve.badRequest);
     if(!req.body.password_member)   return res.sendStatus(statusResolve.badRequest);
 
     loginUser(req.body)
-        .then((data) => {
+        .then((data: any) => {
             res.status(statusResolve.success).json({
                 status: true,
                 data
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
             res.status(statusResolve.success).json({
                 status: false,
                 error
@@ -136,31 +134,20 @@ const loginMember = async(req, res) => {
         })
 }
 
-const validateMemberTag = async(req, res) => {
-    console.log('El tag', req.body)
+export const validateMemberTag = async(req: Request, res: Response) => {
     if(!req.body.tag)    return res.sendStatus(statusResolve.badRequest);
 
     validateTag(req.body)
-        .then((data) => {
+        .then((data: any) => {
             res.status(statusResolve.success).json({
                 status: true,
                 message: data
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
             res.status(statusResolve.success).json({
                 status: false,
                 error
             })
         })
-}
-
-
-module.exports = {
-    createMember,
-    loginMember,
-    validateMemberTag,
-    reSendMail,
-    autoLogin,
-    emailVerification
 }
