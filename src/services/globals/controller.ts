@@ -8,11 +8,10 @@ import {
 } from './dao';
 import { statusResolve } from '../../utils/status';
 import { getAllClans } from './utils';
-
-// TODO: Agregar todos los tipos
+import { TypeTag, TypeClan, TypesTopClan, TypesTopClans, TypeMember, TypesDonations, TypesWarlog, TypeAllClan } from './types';
 
 export const getListOfClans = async (req: Request, res: Response) => {
-  const gettingClans = await getAllClans();
+  const gettingClans: Array<TypeClan> = await getAllClans();
 
   if (!gettingClans) {
     return res.status(statusResolve.badRequest).json({
@@ -28,7 +27,7 @@ export const getListOfClans = async (req: Request, res: Response) => {
 };
 
 export const getSpecificClan = async (req: Request, res: Response) => {
-  let clan_payload = await getClan(req.query.tagname || '#Q0QGU0LR');
+  let clan_payload: TypeAllClan = await getClan(req.query.tagname as string || '#Q0QGU0LR');
 
   if (!clan_payload) {
     return res.status(statusResolve.badRequest).json({
@@ -43,16 +42,15 @@ export const getSpecificClan = async (req: Request, res: Response) => {
   });
 };
 
-// TODO: Eliminar todos los anys
-
 export const getListOfMembers = async (req: Request, res: Response) => {
-  const tags: any = [];
-  const completeListMembers: any = [];
-  const gettingClans = await getAllClans();
+  const tags: Array<TypeTag> = [];
+  const completeListMembers: Array<TypeClan> = [];
+
+  const gettingClans: Array<TypeClan> = await getAllClans();
 
   // Obtenemos los clanes
   // y luego pusheamos todos los tags que encuentra
-  gettingClans.map(({ tag }: any) => tags.push(tag));
+  gettingClans.map((tag: TypeTag) => tags.push(tag));
 
   if (!tags) {
     res.status(statusResolve.badRequest).json({
@@ -65,13 +63,13 @@ export const getListOfMembers = async (req: Request, res: Response) => {
   // Recorremos con un map y una funcion anonima asincrona
   // y hacemos push a un array para devolver todo los mimebros.
   await Promise.all(
-    tags.map(async (tag: string) => {
+    tags.map(async ({ tag }: TypeTag) => {
       const { memberList } = await getMembers(tag);
 
       // Convertimos el Array a un Objecto y pusheamos todos los miembros
       // a una unica lista junta.
-      Object.assign({}, memberList);
-      memberList.map((member: any) => completeListMembers.push(member));
+      Object.assign({}, memberList) as TypeMember;
+      memberList.map((member: TypeClan) => completeListMembers.push(member));
     })
   );
 
@@ -82,7 +80,7 @@ export const getListOfMembers = async (req: Request, res: Response) => {
 };
 
 export const getSpecificMember = async (req: Request, res: Response) => {
-  let member_payload = await getSpecificUser(req.query.tagname || '#R8JUPV2');
+  let member_payload = await getSpecificUser(req.query.tagname as string || '#R8JUPV2');
 
   if (!member_payload) {
     return res.status(statusResolve.badRequest).json({
@@ -96,14 +94,13 @@ export const getSpecificMember = async (req: Request, res: Response) => {
     status: true,
     payload: member_payload,
     upcomingChest: await getSpecificUserUpChest(
-      req.query.tagname || '#R8JUPV2'
+      req.query.tagname as string || '#R8JUPV2'
     ),
   });
 };
 
 export const getTopSpecificClan = async (req: Request, res: Response) => {
-  // const { tagname, max, type }: { tagname: string, max: number, type: string } = req.query;
-  const { tagname, max, type }: any = req.query;
+  const { tagname, max, type } = req.query as unknown as TypesTopClan;
 
   let { memberList } = await getClan(tagname || '#Q0QGU0LR');
 
@@ -119,10 +116,10 @@ export const getTopSpecificClan = async (req: Request, res: Response) => {
   // luego iteramos todos los miembros del array
   // pusheamos los miembros que esten en el top a otro array
   // cuando llegue al valor máximo se corta
-  const nextListMember: any = [];
+  const nextListMember: Array<TypeMember> = [];
   memberList.map(
-    (member: string, index: number) =>
-      index <= parseInt(max) && nextListMember.push(member)
+    (member: TypeMember, index: number) =>
+      index <= max && nextListMember.push(member)
   );
 
   // Si el type sea igual a 'DESC' invertimos la lista
@@ -133,147 +130,149 @@ export const getTopSpecificClan = async (req: Request, res: Response) => {
   });
 };
 
-export const getListOfTopClans = async(req: Request, res: Response) => {
+export const getListOfTopClans = async (req: Request, res: Response) => {
+  const { max = 10, type } = req.query as unknown as TypesTopClans;
 
-    const { max = 10, type }: any = req.query;
+  const tags: Array<TypeTag> = [];
+  let completeListMembers: Array<TypeMember> = [];
+  const gettingClans: Array<TypeClan> = await getAllClans();
 
-    const tags: any = [];
-    let completeListMembers: any = [];
-    let ListOfMembers: any = [];
-    const gettingClans = await getAllClans();
+  // Obtenemos los clanes
+  // y luego pusheamos todos los tags que encuentra
+  gettingClans.map((tag: TypeTag) => tags.push(tag));
 
-    // Obtenemos los clanes
-    // y luego pusheamos todos los tags que encuentra
-    gettingClans.map(({ tag }: any) => tags.push(tag));
+  if (!tags) {
+    res.status(statusResolve.badRequest).json({
+      status: false,
+      message: 'No se pudo recuperar información. Intentalo más tarde.',
+    });
+  }
 
-    if(!tags){
-        res.status(statusResolve.badRequest).json({
-            status: false,
-            message: 'No se pudo recuperar información. Intentalo más tarde.'
-        })
-    }
+  // Buscamos todos los tags que arroje items
+  // Recorremos con un map y una funcion anonima asincrona
+  // y hacemos push a un array para devolver todo los mimebros.
+  await Promise.all(
+    tags.map(async ({ tag }: TypeTag) => {
+      const { memberList } = await getMembers(tag);
 
-    // Buscamos todos los tags que arroje items
-    // Recorremos con un map y una funcion anonima asincrona
-    // y hacemos push a un array para devolver todo los mimebros.
-    await Promise.all(
-        tags.map(async(tag: any) => {
-            const { memberList } = await getMembers(tag);
-
-            // Convertimos el Array a un Objecto y pusheamos todos los miembros
-            // a una unica lista junta.
-            Object.assign({}, memberList);
-            memberList.map((member: string) => completeListMembers.push(member))
-
-        })
-    );
-
-    // Ordenamos los elementos por el atributo trophies
-    ListOfMembers = completeListMembers.sort((fMember: any, sMember: any) => {
-        if (fMember.trophies > sMember.trophies) {
-            return 1;
-        }
-        if (fMember.trophies < sMember.trophies) {
-            return -1;
-        }
-    }).reverse();
-
-    // Recorremos el array para ordenar solamente el numero de elementos
-    // del top, hacemos un max-1 para que no itere una extra vez.
-    let nextListComplete: any = [];
-
-    // FIXME: En el max estaba 'max-1' para que el indice 0 no afecte, buscar la solución.
-    ListOfMembers
-        .map((member: string, index: number) => index <= parseInt(max) && nextListComplete.push(member))
-
-    // Si el type sea igual a 'DESC' dejamos la lista igual
-    // ... si se omite la lista estara inversa.
-    return res.status(statusResolve.success).json({
-        status: true,
-        topMembers: nextListComplete
+      // Convertimos el Array a un Objecto y pusheamos todos los miembros
+      // a una unica lista junta.
+      Object.assign({}, memberList) as TypeMember;
+      memberList.map((member: TypeMember) => completeListMembers.push(member));
     })
-}
+  );
 
-export const getSpecificDonationsClan = async(req: Request, res: Response) => {
-    let { donationsPerWeek } = await getClan(req.query.tagname || '#Q0QGU0LR');
-
-    if(!donationsPerWeek){
-        return res.status(statusResolve.badRequest).json({
-            status: false,
-            message: 'Ocurrio un error al realizar la solicitud'
-        })
-    }
-
-    return res.status(statusResolve.success).json({
-        status: true,
-        donations: donationsPerWeek
+  // Ordenamos los elementos por el atributo trophies
+  const OrderList: Array<TypeMember> = completeListMembers
+    .sort((fMember, sMember) => {
+      if (fMember.trophies > sMember.trophies) {
+        return 1;
+      }
+      if (fMember.trophies < sMember.trophies) {
+        return -1;
+      }
+      return 0;
     })
-}
+    .reverse();
 
-export const getDonationsClans = async(req: Request, res: Response) => {
+  // Recorremos el array para ordenar solamente el numero de elementos
+  // del top, hacemos un max-1 para que no itere una extra vez.
+  const nextListComplete: Array<TypeMember> = [];
 
-    const gettingClans = await getAllClans();
-    const donationsByClan: any = [];
+  OrderList.map(
+    (member: TypeMember, index: number) =>
+      index <= max - 1 && nextListComplete.push(member)
+  );
 
-    if(!gettingClans){
-        return res.status(statusResolve.badRequest).json({
-            status: false,
-            message: 'Ocurrio un error al realizar la solicitud'
-        })
-    }
+  // Si el type sea igual a 'DESC' dejamos la lista igual
+  // ... si se omite la lista estara inversa.
+  return res.status(statusResolve.success).json({
+    status: true,
+    topMembers: type === 'DESC' ? nextListComplete.reverse() : nextListComplete,
+  });
+};
 
-    await Promise.all(
-        gettingClans.map(async(clan: any) => {
-            let { donationsPerWeek, name } = await getClan(clan.tag || '#Q0QGU0LR');
-            donationsByClan.push({
-                name,
-                donationsPerWeek
-            })
-        })
-    )
+export const getSpecificDonationsClan = async (req: Request, res: Response) => {
+  let { donationsPerWeek } = await getClan(req.query.tagname as string || '#Q0QGU0LR') as TypeClan;
 
-    return res.status(statusResolve.success).json({
-        status: true,
-        donations: donationsByClan
+  if (!donationsPerWeek) {
+    return res.status(statusResolve.badRequest).json({
+      status: false,
+      message: 'Ocurrio un error al realizar la solicitud',
+    });
+  }
+
+  return res.status(statusResolve.success).json({
+    status: true,
+    donations: donationsPerWeek,
+  });
+};
+
+export const getDonationsClans = async (req: Request, res: Response) => {
+  const gettingClans: Array<TypeClan> = await getAllClans();
+  const donationsByClan: Array<TypesDonations> = [];
+
+  if (!gettingClans) {
+    return res.status(statusResolve.badRequest).json({
+      status: false,
+      message: 'Ocurrio un error al realizar la solicitud',
+    });
+  }
+
+  await Promise.all(
+    gettingClans.map(async (clan: TypesDonations) => {
+      let { donationsPerWeek, name } = await getClan(clan.tag || '#Q0QGU0LR');
+      donationsByClan.push({
+        name,
+        donationsPerWeek,
+      });
     })
-}
+  );
 
-export const getSpecificWar = async(req: Request, res: Response) => {
-    let payload_warlog = await getSpecificWarLog(req.query.tagname || '#Q0QGU0LR');
+  return res.status(statusResolve.success).json({
+    status: true,
+    donations: donationsByClan,
+  });
+};
 
-    if(!payload_warlog){
-        return res.status(statusResolve.badRequest).json({
-            status: false,
-            message: 'Ocurrio un error al realizar la solicitud'
-        })
-    }
+export const getSpecificWar = async (req: Request, res: Response) => {
+  let payload_warlog: Array<TypesWarlog> = await getSpecificWarLog(
+    req.query.tagname as string || '#Q0QGU0LR'
+  );
 
-    return res.status(statusResolve.success).json({
-        status: true,
-        warLog: payload_warlog
+  if (!payload_warlog) {
+    return res.status(statusResolve.badRequest).json({
+      status: false,
+      message: 'Ocurrio un error al realizar la solicitud',
+    });
+  }
+
+  return res.status(statusResolve.success).json({
+    status: true,
+    warLog: payload_warlog,
+  });
+};
+
+export const getWarlogClans = async (req: Request, res: Response) => {
+  const gettingClans: Array<TypeClan> = await getAllClans();
+  const warLogByClan: Array<TypesWarlog> = [];
+
+  await Promise.all(
+    gettingClans.map(async (clan: TypeClan) => {
+      let payload_warlog = await getSpecificWarLog(clan.tag || '#Q0QGU0LR');
+      warLogByClan.push(payload_warlog);
     })
-}
+  );
 
-export const getWarlogClans = async(req: Request, res: Response) => {
-    const gettingClans = await getAllClans();
-    const warLogByClan: any = [];
+  if (!warLogByClan) {
+    return res.status(statusResolve.badRequest).json({
+      status: false,
+      message: 'Ocurrio un error al realizar la solicitud',
+    });
+  }
 
-    await Promise.all(
-        gettingClans.map(async(clan: any) => {
-            let payload_warlog = await getSpecificWarLog(clan.tag || '#Q0QGU0LR');
-            warLogByClan.push(payload_warlog)
-        })
-    )
-
-    if(!warLogByClan){
-        return res.status(statusResolve.badRequest).json({
-            status: false,
-            message: 'Ocurrio un error al realizar la solicitud'
-        })
-    }
-
-    return res.status(statusResolve.success).json({
-        status: true,
-        warLog: warLogByClan
-    })
-}
+  return res.status(statusResolve.success).json({
+    status: true,
+    warLog: warLogByClan,
+  });
+};

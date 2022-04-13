@@ -25,4 +25,4 @@ const authSchema = Schema({
     }
 });
 
-export default model('auth', authSchema);
+export const Auth = model('auth', authSchema);

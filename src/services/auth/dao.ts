@@ -1,6 +1,7 @@
+import GenerateJWT from "../../utils/webToken";
+import { Auth } from "./model";
 const bcrypt = require('bcryptjs/dist/bcrypt');
-const { GenerateJWT } = require('../../utils/webToken');
-const Auth = require('./model');
+
 const { VerificationCode } = require('./utilities');
 
 export const createUser = (user: any) => {

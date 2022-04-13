@@ -9,6 +9,7 @@ import {
 import { statusResolve } from '../../utils/status';
 import transport from '../../config/config.mailer';
 import { VerificationCode } from './utilities';
+import { DataUser } from './types';
 
 // TODO: Agregar todos los tipos
 
