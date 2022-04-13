@@ -1,10 +1,12 @@
-import GenerateJWT from "../../utils/webToken";
-import { Auth } from "./model";
+import GenerateJWT from '../../utils/webToken';
+import { Auth } from './auth.model';
+import { User } from './auth.types';
+import { VerificationCode } from './auth.utilities';
+
+// Solo funciona si está importado asi. >:c
 const bcrypt = require('bcryptjs/dist/bcrypt');
 
-const { VerificationCode } = require('./utilities');
-
-export const createUser = (user: any) => {
+export const createUser = (user: User) => {
   return new Promise(async (resolve, reject) => {
     let userData = await Auth.findOne({ email_member: user.email_member });
 
@@ -27,7 +29,7 @@ export const createUser = (user: any) => {
     return resolve({ member_info: userData });
   });
 };
-export const loginUser = (user: any) => {
+export const loginUser = (user: User) => {
   return new Promise(async (resolve, reject) => {
     const userData = await Auth.findOne({ name_member: user.name_member });
     if (!userData) return reject('Este usuario no existe en la base de datos');
@@ -43,20 +45,20 @@ export const loginUser = (user: any) => {
     return resolve({ member_info: userData, token: tokenAccess });
   });
 };
-export const validateTag = (tag: any) => {
+export const validateTag = (tag: string) => {
   return new Promise(async (resolve, reject) => {
-    const tagExist = await Auth.findOne({ tag_member: tag.tag });
+    const tagExist = await Auth.findOne({ tag_member: tag });
     if (!tagExist) return resolve('Este tag esta disponible');
 
     return reject('Este tag ya esta tomado');
   });
 };
-export const getUser = (id: any) => {
+export const getUser = (id: string) => {
   return Auth.findById(id)
     .then((user: any) => user)
     .catch(() => 'No se pudo encontrar a este usuario');
 };
-export const verificationUserEmail = (user: any, code: any) => {
+export const verificationUserEmail = (user: User, code: string) => {
   return new Promise(async (resolve, reject) => {
     const userData = await Auth.findOne({ name_member: user.name_member });
     if (!userData) return reject('Este usuario no existe en la base de datos');

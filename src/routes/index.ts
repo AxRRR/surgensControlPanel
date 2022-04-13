@@ -11,14 +11,14 @@ import {
   getSpecificWar,
   getTopSpecificClan,
   getWarlogClans,
-} from '../services/globals/controller';
+} from '../services/publics/public.controller';
 import {
   autoLogin,
   createMember,
   emailVerification,
   loginMember,
   validateMemberTag,
-} from '../services/auth/controller';
+} from '../services/auth/auth.controller';
 
 const router = express.Router();
 

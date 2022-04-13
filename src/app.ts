@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Interceptor para agregar la autorización a la API de Clash Royale
 client.interceptors.request.use((req: Request) => {
     req.headers['authorization'] = `Bearer ${process.env.ACCESS_TOKEN_CR}`;
     req.headers['content-type'] = 'application/x-www-form-urlencoded';

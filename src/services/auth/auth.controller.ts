@@ -5,13 +5,10 @@ import {
   loginUser,
   validateTag,
   verificationUserEmail,
-} from './dao';
+} from './auth.dao';
 import { statusResolve } from '../../utils/status';
 import transport from '../../config/config.mailer';
-import { VerificationCode } from './utilities';
-import { DataUser } from './types';
-
-// TODO: Agregar todos los tipos
+import { VerificationCode } from './auth.utilities';
 
 export const createMember = async (req: Request, res: Response) => {
   if (!req.body.name_member) return res.sendStatus(statusResolve.badRequest);
@@ -148,7 +145,7 @@ export const loginMember = async (req: Request, res: Response) => {
 export const validateMemberTag = async (req: Request, res: Response) => {
   if (!req.body.tag) return res.sendStatus(statusResolve.badRequest);
 
-  validateTag(req.body)
+  validateTag(req.body.tag)
     .then((data: any) => {
       res.status(statusResolve.success).json({
         status: true,

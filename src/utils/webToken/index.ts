@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
-// TODO: Cambiar los tipos
 
 declare var process: {
-    env: {
-        SECRET_JWT_SEED: string;
-    };
+  env: {
+    SECRET_JWT_SEED: string;
   };
+};
 
 const GenerateJWT = (id: string, name: string) => {
   return new Promise((resolve, reject) => {

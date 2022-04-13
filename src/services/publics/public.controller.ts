@@ -5,10 +5,10 @@ import {
   getSpecificUser,
   getSpecificUserUpChest,
   getSpecificWarLog,
-} from './dao';
+} from './public.dao';
 import { statusResolve } from '../../utils/status';
-import { getAllClans } from './utils';
-import { TypeTag, TypeClan, TypesTopClan, TypesTopClans, TypeMember, TypesDonations, TypesWarlog, TypeAllClan } from './types';
+import { getAllClans } from './public.utilies';
+import { TypeTag, TypeClan, TypesTopClan, TypesTopClans, TypeMember, TypesDonations, TypesWarlog, TypeAllClan } from './public.types';
 
 export const getListOfClans = async (req: Request, res: Response) => {
   const gettingClans: Array<TypeClan> = await getAllClans();
