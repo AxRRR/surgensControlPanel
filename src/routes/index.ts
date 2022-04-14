@@ -19,6 +19,13 @@ import {
   loginMember,
   validateMemberTag,
 } from '../services/auth/auth.controller';
+import {
+  acceptAscent,
+  adminDeleteUser,
+  adminUpdateUser,
+  lastRegistedMember,
+} from '../services/dashboard/administrador/admin.controller';
+import { createNewPost, createNewRecommendation } from '../services/dashboard/globals/global.controller';
 
 const router = express.Router();
 
@@ -44,5 +51,20 @@ router.use('/auth/login', loginMember);
 router.use('/auth/getuser', <MiddlewareJWT>isValidJWT, autoLogin);
 router.use('/auth/validate_tag', validateMemberTag);
 router.use('/auth/confirm_email', emailVerification);
+
+// Administrador Request
+router.use('/admin/update', adminUpdateUser);
+router.use('/admin/delete', adminDeleteUser);
+
+// RecommendedUser Request
+router.use('/global/recommended/create', createNewRecommendation);
+router.use('/global/recommended/response', acceptAscent);
+
+// Create new post
+router.use('/global/post/create', createNewPost);
+
+// Get last user registed
+router.use('/admin/get_lastmember_registed', lastRegistedMember);
+
 
 export default router;
