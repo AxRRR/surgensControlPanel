@@ -46,7 +46,7 @@ export const adminDeleteUser = async (req: Request, res: Response) => {
         'Este usuario no tiene los permisos necesarios para acceder al recurso',
     });
 
-  await deleteUser(id, req.body)
+  await deleteUser(id)
     .then(() =>
       res.status(statusResolve.success).json({
         status: true,
@@ -102,7 +102,7 @@ export const lastRegistedMember = async (req: Request, res: Response) => {
     .then((users: any) =>
       res.status(statusResolve.success).json({
         status: true,
-        users
+        users,
       })
     )
     .catch((e: any) =>

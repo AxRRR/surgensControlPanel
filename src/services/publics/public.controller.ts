@@ -2,13 +2,24 @@ import { Request, Response } from 'express';
 import {
   getClan,
   getMembers,
+  getNews,
+  getSpecificNew,
   getSpecificUser,
   getSpecificUserUpChest,
   getSpecificWarLog,
 } from './public.dao';
 import { statusResolve } from '../../utils/status';
 import { getAllClans } from './public.utilies';
-import { TypeTag, TypeClan, TypesTopClan, TypesTopClans, TypeMember, TypesDonations, TypesWarlog, TypeAllClan } from './public.types';
+import {
+  TypeTag,
+  TypeClan,
+  TypesTopClan,
+  TypesTopClans,
+  TypeMember,
+  TypesDonations,
+  TypesWarlog,
+  TypeAllClan,
+} from './public.types';
 
 export const getListOfClans = async (req: Request, res: Response) => {
   const gettingClans: Array<TypeClan> = await getAllClans();
@@ -27,7 +38,9 @@ export const getListOfClans = async (req: Request, res: Response) => {
 };
 
 export const getSpecificClan = async (req: Request, res: Response) => {
-  let clan_payload: TypeAllClan = await getClan(req.query.tagname as string || '#Q0QGU0LR');
+  let clan_payload: TypeAllClan = await getClan(
+    (req.query.tagname as string) || '#Q0QGU0LR'
+  );
 
   if (!clan_payload) {
     return res.status(statusResolve.badRequest).json({
@@ -80,7 +93,9 @@ export const getListOfMembers = async (req: Request, res: Response) => {
 };
 
 export const getSpecificMember = async (req: Request, res: Response) => {
-  let member_payload = await getSpecificUser(req.query.tagname as string || '#R8JUPV2');
+  let member_payload = await getSpecificUser(
+    (req.query.tagname as string) || '#R8JUPV2'
+  );
 
   if (!member_payload) {
     return res.status(statusResolve.badRequest).json({
@@ -94,7 +109,7 @@ export const getSpecificMember = async (req: Request, res: Response) => {
     status: true,
     payload: member_payload,
     upcomingChest: await getSpecificUserUpChest(
-      req.query.tagname as string || '#R8JUPV2'
+      (req.query.tagname as string) || '#R8JUPV2'
     ),
   });
 };
@@ -193,7 +208,9 @@ export const getListOfTopClans = async (req: Request, res: Response) => {
 };
 
 export const getSpecificDonationsClan = async (req: Request, res: Response) => {
-  let { donationsPerWeek } = await getClan(req.query.tagname as string || '#Q0QGU0LR') as TypeClan;
+  let { donationsPerWeek } = (await getClan(
+    (req.query.tagname as string) || '#Q0QGU0LR'
+  )) as TypeClan;
 
   if (!donationsPerWeek) {
     return res.status(statusResolve.badRequest).json({
@@ -237,7 +254,7 @@ export const getDonationsClans = async (req: Request, res: Response) => {
 
 export const getSpecificWar = async (req: Request, res: Response) => {
   let payload_warlog: Array<TypesWarlog> = await getSpecificWarLog(
-    req.query.tagname as string || '#Q0QGU0LR'
+    (req.query.tagname as string) || '#Q0QGU0LR'
   );
 
   if (!payload_warlog) {
@@ -275,4 +292,29 @@ export const getWarlogClans = async (req: Request, res: Response) => {
     status: true,
     warLog: warLogByClan,
   });
+};
+
+// Obtener las ultimas noticias
+export const getLastestPost = async (req: Request, res: Response) => {
+  if (!req.query.limit) return res.sendStatus(statusResolve.badRequest);
+
+  await getNews(req.query.limit as unknown as number)
+    .then((posts: any) =>
+      res.status(statusResolve.success).json({ status: true, posts })
+    )
+    .catch((e: any) =>
+      res.status(statusResolve.success).json({ status: false, error: e })
+    );
+};
+
+export const getPost = async (req: Request, res: Response) => {
+  if (!req.body.id) return res.status(statusResolve.badRequest);
+
+  await getSpecificNew(req.body.id)
+    .then((post: any) => {
+      res.status(statusResolve.success).json({ status: true, post });
+    })
+    .catch((error: any) => {
+      res.status(statusResolve.success).json({ status: false, post: error });
+    });
 };

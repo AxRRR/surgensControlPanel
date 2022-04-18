@@ -2,9 +2,11 @@ import isValidJWT, { MiddlewareJWT } from '../middlewares/jwt';
 import express from 'express';
 import {
   getDonationsClans,
+  getLastestPost,
   getListOfClans,
   getListOfMembers,
   getListOfTopClans,
+  getPost,
   getSpecificClan,
   getSpecificDonationsClan,
   getSpecificMember,
@@ -26,6 +28,7 @@ import {
   lastRegistedMember,
 } from '../services/dashboard/administrador/admin.controller';
 import { createNewPost, createNewRecommendation } from '../services/dashboard/globals/global.controller';
+import { createNewReport, deleteSpecificPost } from '../services/dashboard/moderator/mod.controller';
 
 const router = express.Router();
 
@@ -62,6 +65,12 @@ router.use('/global/recommended/response', acceptAscent);
 
 // Create new post
 router.use('/global/post/create', createNewPost);
+router.use('/global/post/getlastest', getLastestPost);
+router.use('/global/post/get', getPost);
+router.use('/global/report/create_report', createNewReport);
+
+// Solo moderadores y administradores
+router.use('/global/post/delete', deleteSpecificPost);
 
 // Get last user registed
 router.use('/admin/get_lastmember_registed', lastRegistedMember);

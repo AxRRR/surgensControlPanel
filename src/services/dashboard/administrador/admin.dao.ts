@@ -7,8 +7,8 @@ export const updateUser = (id: string, props: TypesPropUser) => {
     .catch(() => 'No se pudo encontrar a este usuario');
 };
 
-export const deleteUser = (id: string, props: TypesPropUser) => {
-  return Auth.findByIdAndDelete(id, props)
+export const deleteUser = (id: string) => {
+  return Auth.findByIdAndDelete(id)
     .then((user: any) => user)
     .catch(() => 'No se pudo encontrar a este usuario');
 };
