@@ -19,6 +19,7 @@ export const createUser = (user: User) => {
     );
     userData.role_member = 'Member';
     userData.verification_code = VerificationCode;
+    userData.createdAt = new Date;
 
     // Comprobamos que se haya hecho bien el save
     // en caso de que no, hacemos un catch y retornamos el error.

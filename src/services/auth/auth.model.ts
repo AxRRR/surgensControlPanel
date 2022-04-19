@@ -22,6 +22,9 @@ const authSchema = Schema({
     },
     verification_code: {
         type: String,
+    },
+    createdAt: {
+        type: Date
     }
 });
 
