@@ -13,3 +13,11 @@ export interface TypesReports {
   report_createdAt: Date;
   report_status: boolean;
 }
+
+export interface TypesTask {
+  task_title: string;
+  task_description: string;
+  task_createAt?: Date;
+  task_invoice?: string;
+  task_status: boolean;
+}
