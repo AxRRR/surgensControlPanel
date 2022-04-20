@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { statusResolve } from '../../../utils/status';
 import { hasRank } from '../utilities/checkRank.utilites';
-import { deleteUser, getLastUsers, updateUser } from './admin.dao';
+import { deleteUser, getAllRecomendations, getLastUsers, updateUser } from './admin.dao';
 
 export const adminUpdateUser = async (req: Request, res: Response) => {
   if (!req.body.role_member) return res.sendStatus(statusResolve.badRequest);
@@ -83,14 +83,44 @@ export const acceptAscent = (req: Request, res: Response) => {
   }
 };
 
+export const getAscents = async(req: Request, res: Response) => {
+  if (!req.body.member_role) return res.sendStatus(statusResolve.badRequest);
+
+  if (
+    !(
+      hasRank(req.body.member_role).administrator() ||
+      hasRank(req.body.member_role).moderator() 
+    )
+  )
+    return res.status(statusResolve.success).json({
+      status: false,
+      message:
+        'Este usuario no tiene los permisos necesarios para acceder al recurso',
+    });
+
+    await getAllRecomendations()
+    .then((data) =>
+      res.status(statusResolve.success).json({
+        status: true,
+        data
+      })
+    )
+    .catch((e: any) =>
+      res.status(statusResolve.badRequest).json({
+        status: false,
+        message: e,
+      })
+    );
+};
+
 export const lastRegistedMember = async (req: Request, res: Response) => {
   if (!req.body.member_role) return res.sendStatus(statusResolve.badRequest);
 
-  const { member_role } = req.body;
-
   if (
-    !hasRank(member_role).administrator() &&
-    !hasRank(member_role).moderator()
+    !(
+      hasRank(req.body.member_role).administrator() ||
+      hasRank(req.body.member_role).moderator() 
+    )
   )
     return res.status(statusResolve.success).json({
       status: false,
@@ -102,7 +132,7 @@ export const lastRegistedMember = async (req: Request, res: Response) => {
     .then((users: any) =>
       res.status(statusResolve.success).json({
         status: true,
-        users,
+        users
       })
     )
     .catch((e: any) =>

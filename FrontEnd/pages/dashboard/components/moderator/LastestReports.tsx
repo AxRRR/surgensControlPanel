@@ -1,23 +1,30 @@
-import { Container, Section } from "@/components/ui"
+import { Container, Section } from '@/components/ui';
+import { ReportTypes } from 'pages/dashboard/models/mod.models';
+import { getReports } from 'pages/dashboard/services/mod.services';
+import { useCallService } from '../../../../hooks/useCallService';
 
-
+// TODO: Revisar porque no está descripcion de la incidencia.
 export const LastestReports = () => {
-    return (
-        <Container>
-            <Section config={{ enable: true, flex: false, text: 'Incidencias' }}>
-                <div className='dashboard__reports'>
-                    <h1>N° J3483YL - Autor: AleksandarRuut</h1>
-                    <h3>Objetivos de mes</h3>
-                    <p>No se lograron concretar los objetivos de mes de Marzo...</p>
-                    <button className='button__green'>Revisar incidencia</button>
-                </div>
-                <div className='dashboard__reports'>
-                    <h1>N° LE483Y9 - Autor: Dennis</h1>
-                    <h3>Guerra de Clanes Surgens Beta</h3>
-                    <p>No se logro terminar en primer lugar en la guerra de clanes...</p>
-                    <button className='button__green'>Revisar incidencia</button>
-                </div>
-            </Section>
-        </Container>
-    )
-}
+  // Utilizamos nuestro custom hook para obtener la infomacion
+  const { call, isFinish } = useCallService(getReports);
+
+  return (
+    <Container>
+      {isFinish && !!call && (
+        <Section config={{ enable: true, flex: false, text: 'Incidencias' }}>
+          {call.map((report: ReportTypes, index: number) => (
+            <div key={index} className="dashboard__reports">
+              <h1>
+                N° {report.report_invoice} - Autor:{' '}
+                {report.report_user.name_member}
+              </h1>
+              <h3>{report.report_title}</h3>
+              <p>{report.report_title}</p>
+              <button className="button__green">Revisar incidencia</button>
+            </div>
+          ))}
+        </Section>
+      )}
+    </Container>
+  );
+};

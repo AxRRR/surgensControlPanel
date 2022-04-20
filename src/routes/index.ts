@@ -25,10 +25,11 @@ import {
   acceptAscent,
   adminDeleteUser,
   adminUpdateUser,
+  getAscents,
   lastRegistedMember,
 } from '../services/dashboard/administrador/admin.controller';
 import { createNewPost, createNewRecommendation, createNewReport } from '../services/dashboard/globals/global.controller';
-import { addNewSpecificObjective, createNewsObjectives, deleteSpecificObjectives, deleteSpecificPost, responseSpecificReport, updateSpecificObjectives } from '../services/dashboard/moderator/mod.controller';
+import { addNewSpecificObjective, createNewsObjectives, deleteSpecificObjectives, deleteSpecificPost, getLastestReports, responseSpecificReport, updateSpecificObjectives } from '../services/dashboard/moderator/mod.controller';
 import { changeSpecificStatus, getSpecificObjectives } from '../services/dashboard/leader_clan/leader.controller';
 
 const router = express.Router();
@@ -63,6 +64,7 @@ router.use('/admin/delete', <MiddlewareJWT>isValidJWT, adminDeleteUser);
 // RecommendedUser Request
 router.use('/global/recommended/create', <MiddlewareJWT>isValidJWT, createNewRecommendation);
 router.use('/global/recommended/response', <MiddlewareJWT>isValidJWT, acceptAscent);
+router.use('/global/recommended/get_all', <MiddlewareJWT>isValidJWT, getAscents);
 
 // Create new post
 router.use('/global/post/create', <MiddlewareJWT>isValidJWT, createNewPost);
@@ -79,6 +81,7 @@ router.use('/leader/change_status', <MiddlewareJWT>isValidJWT, changeSpecificSta
 // Solo moderadores y administradores
 router.use('/global/post/delete', <MiddlewareJWT>isValidJWT, deleteSpecificPost);
 router.use('/mod/response_report', <MiddlewareJWT>isValidJWT, responseSpecificReport);
+router.use('/mod/get_reports', <MiddlewareJWT>isValidJWT, getLastestReports);
 router.use('/mod/create_objectives', <MiddlewareJWT>isValidJWT, createNewsObjectives);
 router.use('/mod/update_objectives', <MiddlewareJWT>isValidJWT, updateSpecificObjectives);
 router.use('/mod/delete_objectives', <MiddlewareJWT>isValidJWT, deleteSpecificObjectives);

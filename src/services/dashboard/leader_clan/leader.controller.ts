@@ -5,12 +5,22 @@ import { changeStatus, getObjectives } from './leader.dao';
 import { ReciveObjectives } from './leader.types';
 
 export const getSpecificObjectives = async (req: Request, res: Response) => {
-  if (req.query.invoice) return res.sendStatus(statusResolve.badRequest);
+  if (!req.body.member_role) return res.sendStatus(statusResolve.badRequest);
+  if (!req.query.clan) return res.sendStatus(statusResolve.badRequest);
 
   if (
-    !hasRank(req.body.member_role).leaderClan()
+    !(
+      hasRank(req.body.member_role).administrator() ||
+      hasRank(req.body.member_role).moderator() ||
+      hasRank(req.body.member_role).leaderClan()
+    )
   )
-  await getObjectives(req.query.invoice as string)
+    return res.status(statusResolve.success).json({
+      status: false,
+      message:
+        'Este usuario no tiene los permisos necesarios para acceder al recurso',
+    });
+  await getObjectives(req.query.clan as string)
     .then((e: ReciveObjectives) =>
       res.status(statusResolve.success).json({
         status: true,

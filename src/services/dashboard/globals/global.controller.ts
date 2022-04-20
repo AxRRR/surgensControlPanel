@@ -7,10 +7,13 @@ import { createPost, createRecomendation, createReport } from './global.dao';
 export const createNewRecommendation = async (req: Request, res: Response) => {
   if (!req.body.member_role) return res.sendStatus(statusResolve.badRequest);
 
+  // Forma correcta de verificar si tiene rango el miembro.
   if (
-    !hasRank(req.body.member_role).administrator() ||
-    !hasRank(req.body.member_role).moderator() ||
-    !hasRank(req.body.member_role).leaderClan()
+    !(
+      hasRank(req.body.member_role).administrator() ||
+      hasRank(req.body.member_role).moderator() ||
+      hasRank(req.body.member_role).leaderClan()
+    )
   )
     return res.status(statusResolve.success).json({
       status: false,

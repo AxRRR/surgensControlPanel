@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/layout';
+import { useUserLogin } from '@/hooks/useUserLogin';
 import { AcceptMember } from './components/AcceptMember';
 import { ManageMembers } from './components/administrator/ManageMembers';
 import { BestMembers } from './components/BestMembers';
@@ -11,8 +12,10 @@ import { LastRegistedMembers } from './components/moderator/LastRegistedMembers'
 import { WorstMembers } from './components/WorstMembers';
 
 const Dashboard = () => {
+  const [loading, error] = useUserLogin();
   return (
-    <Layout>
+    <>
+    {!loading && <Layout>
       {/* TODO: Mejorar el layout del titulo */}
       <h1>Dashboard Surgens</h1>
       <LastestNews />
@@ -28,7 +31,8 @@ const Dashboard = () => {
 
       {/* TODO: Solo Administrador */}
       <ManageMembers />
-    </Layout>
+    </Layout>}
+    </>
   );
 };
 

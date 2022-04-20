@@ -33,7 +33,7 @@ export const createObjectives = (
     objectivesInstance.objective_user = objectives.objective_user;
     await objectivesInstance
       .save()
-      .then(() => resolve(objectivesInstance))
+      .then(() => resolve(objectivesInstance.populate('objective_tasks')))
       .catch(() => reject('Ocurrio un error al guardar los objetivos.'));
   });
 };
@@ -62,6 +62,10 @@ export const responseReport = (id: string) => {
       .then(() => resolve('El reporte fue atendido y eliminado'))
       .catch(() => reject('Ocurrio un error al eliminar el reporte.'));
   });
+};
+
+export const getReports = async() => {
+  return await Reports.find().populate('report_user', 'name_member');
 };
 
 export const addNewTask = (invoice: string, task: TypesTask) => {

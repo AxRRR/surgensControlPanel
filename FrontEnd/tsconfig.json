@@ -26,6 +26,6 @@
       "@/utilities/*": ["utilities/*"],
     } 
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "hooks/useCallService.js"],
   "exclude": ["node_modules"]
 }

@@ -2,13 +2,13 @@ import { Objectives } from './leader.objectives.model';
 import { Tasks } from './leader.task.model';
 import { ReciveObjectives } from './leader.types';
 
-export const getObjectives = (invoice: string) => {
+export const getObjectives = (clan: string) => {
   return new Promise<ReciveObjectives>(async (resolve, reject) => {
     const objective = await Objectives.findOne({
-      objective_invoice: invoice,
-    }).populate('objective_tasks');
+      objective_clan: clan,
+    }).populate('objective_tasks').populate('objective_user');
 
-    if (!objective) return reject('Este folio no existe en la base de datos.');
+    if (!objective) return reject('Este clan no existe en la base de datos.');
     return resolve(objective);
   });
 };
